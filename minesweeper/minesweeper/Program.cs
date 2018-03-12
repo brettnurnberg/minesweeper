@@ -6,10 +6,8 @@ using System.Windows.Forms;
 
 /* Master To Do list:
  * Figure out how to speed up loading images
- *   Could try to load all images as bitmaps and then draw the bitmap.
+ *   Could try to preload all images as bitmaps.
  *   Could figure out how to use resource scripts
- * Show wrongly placed flags on losses - make correct image
- * Implement drag and hold - call handlers for enter and leave events IF mouse is down (create bool)
  * Implement statistics
  * Implement custom level selection
  */

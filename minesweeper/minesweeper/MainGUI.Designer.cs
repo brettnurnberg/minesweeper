@@ -64,6 +64,8 @@ namespace minesweeper
                 this.BackColor = Color.FromArgb(189, 189, 189);
                 this.FormBorderStyle = FormBorderStyle.FixedSingle;
                 this.MaximizeBox = false;
+                this.Capture = false;
+                this.MouseLeave += new EventHandler(leftForm);
 
                 /* Create timer */
                 timer = new Timer(components);
@@ -246,8 +248,8 @@ namespace minesweeper
                     p.ImageLocation = "res/unsel.png";
                     p.MouseUp += new MouseEventHandler(onSpotRelease);
                     p.MouseDown += new MouseEventHandler(onSpotPress);
-                    //p.MouseEnter += new MouseEventHandler(onSpotEnter);
-                    //p.MouseLeave += new MouseEventHandler(onSpotLeave);
+                    p.MouseEnter += new EventHandler(onSpotEnter);
+                    p.MouseLeave += new EventHandler(onSpotLeave);
                     spots.Add(p);
                 }
             }

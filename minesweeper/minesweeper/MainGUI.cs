@@ -16,6 +16,9 @@ namespace minesweeper
         private SpotUpdater searchMine;
         private SpotUpdater setFlag;
         private bool mouseDown;
+        private int mouseX;
+        private int mouseY;
+        private MouseButtons mouseB;
 
         public MainGUI(GameData data_, SpotUpdater setFlag_, SpotUpdater searchMine_)
         {
@@ -78,44 +81,93 @@ namespace minesweeper
             setDigital(time, data.currTime);
         }
 
+        /* Used to hold down button on a drag */
+        private void onSpotEnter(Object sender, EventArgs e)
+        {
+            if(mouseDown)
+            {
+                PictureBox p = (PictureBox)sender;
+
+                setMouseCoords(p);
+                if ((data.status[mouseX, mouseY] == MineStatus.UNCLICKED
+                    || data.status[mouseX, mouseY] == MineStatus.QUESTION)
+                    && mouseB == MouseButtons.Left)
+                {
+                    p.ImageLocation = "res/sel_0.png";
+                }
+            }
+        }
+
+        /* Used to hold down button on a drag */
+        private void onSpotLeave(Object sender, EventArgs e)
+        {
+            if(mouseDown)
+            {
+                updateSpot(mouseX, mouseY);
+                this.Capture = false;
+            }
+        }
+
+        /* Used for when the control leaves the form */
+        private void leftForm(Object sender, EventArgs e)
+        {
+            mouseDown = false;
+            updateHeader();
+        }
+
         /* Runs when the mouse is released over a square */
         private void onSpotRelease(Object sender, EventArgs e)
         {
-            mouseDown = false;
-            if (data.gameStatus == GameStatus.PLAY)
-            {
-                PictureBox p = (PictureBox)sender;
-                MouseEventArgs me = (MouseEventArgs)e;
-                int idx = spots.IndexOf(p);
-                int x, y;
+            /* Fix so control doesn't capture the mouse */
+            PictureBox p = (PictureBox)sender;
+            p.Capture = true;
 
-                /* get coordinates of clicked box */
-                x = idx % data.width;
-                y = idx / data.width;
+            if (data.gameStatus == GameStatus.PLAY && mouseDown == true)
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
 
                 /* call correct function */
                 if (me.Button == MouseButtons.Left)
                 {
-                    searchMine(x, y);
+                    searchMine(mouseX, mouseY);
                 }
                 else if (me.Button == MouseButtons.Right)
                 {
-                    setFlag(x, y);
+                    setFlag(mouseX, mouseY);
                 }
                 updateHeader();
             }
+            mouseDown = false;
         }
 
         /* Runs when the mouse is pressed over a square */
         private void onSpotPress(Object sender, EventArgs e)
         {
             mouseDown = true;
+
+            PictureBox p = (PictureBox)sender;
+            setMouseCoords(p);
+            p.Capture = false;
             MouseEventArgs me = (MouseEventArgs)e;
-            //make smiley scared, eventually follow the mouse indenting correct button
-            if (data.gameStatus == GameStatus.PLAY && me.Button == MouseButtons.Left)
+            mouseB = me.Button;
+
+            if (data.gameStatus == GameStatus.PLAY && mouseB == MouseButtons.Left)
             {
                 face.ImageLocation = "res/face_click.png";
+                if(data.status[mouseX, mouseY] == MineStatus.UNCLICKED || data.status[mouseX, mouseY] == MineStatus.QUESTION)
+                {
+                    p.ImageLocation = "res/sel_0.png";
+                }
             }
+        }
+
+        private void setMouseCoords(PictureBox p)
+        {
+            int idx = spots.IndexOf(p);
+
+            /* get coordinates of clicked box */
+            mouseX = idx % data.width;
+            mouseY = idx / data.width;
         }
 
         /* Set the digital number to given value */
@@ -144,6 +196,10 @@ namespace minesweeper
                     if(data.mines[i, j] == -1 && data.status[i, j] != MineStatus.CLICKED)
                     {
                         spots[idx].ImageLocation = "res/mine.png";
+                    }
+                    else if (data.status[i, j] == MineStatus.FLAGGED)
+                    {
+                        spots[idx].ImageLocation = "res/mine_not.png";
                     }
                     idx++;
                 }
