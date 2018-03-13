@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using minesweeper.Properties;
 
 namespace minesweeper
 {
@@ -142,42 +144,42 @@ namespace minesweeper
             /* Initialize controls */
             border_tl.Size = dims.border_tl.Size;
             border_tl.Location = dims.border_tl.Location;
-            border_tl.ImageLocation = "res/border_tl.png";
+            border_tl.Image = Resources.border_tl;
             this.Controls.Add(border_tl);
 
             border_tr.Size = dims.border_tr.Size;
             border_tr.Location = dims.border_tr.Location;
-            border_tr.ImageLocation = "res/border_tr.png";
+            border_tr.Image = Resources.border_tr;
             this.Controls.Add(border_tr);
 
             border_vl.Size = dims.border_vl.Size;
             border_vl.Location = dims.border_vl.Location;
-            border_vl.ImageLocation = "res/border_vt.png";
+            border_vl.Image = Resources.border_vt;
             this.Controls.Add(border_vl);
 
             border_vr.Size = dims.border_vr.Size;
             border_vr.Location = dims.border_vr.Location;
-            border_vr.ImageLocation = "res/border_vt.png";
+            border_vr.Image = Resources.border_vt;
             this.Controls.Add(border_vr);
 
             border_ml.Size = dims.border_ml.Size;
             border_ml.Location = dims.border_ml.Location;
-            border_ml.ImageLocation = "res/border_ml.png";
+            border_ml.Image = Resources.border_ml;
             this.Controls.Add(border_ml);
 
             border_mr.Size = dims.border_mr.Size;
             border_mr.Location = dims.border_mr.Location;
-            border_mr.ImageLocation = "res/border_mr.png";
+            border_mr.Image = Resources.border_mr;
             this.Controls.Add(border_mr);
 
             border_bl.Size = dims.border_bl.Size;
             border_bl.Location = dims.border_bl.Location;
-            border_bl.ImageLocation = "res/border_bl.png";
+            border_bl.Image = Resources.border_bl;
             this.Controls.Add(border_bl);
 
             border_br.Size = dims.border_br.Size;
             border_br.Location = dims.border_br.Location;
-            border_br.ImageLocation = "res/border_br.png";
+            border_br.Image = Resources.border_br;
             this.Controls.Add(border_br);
 
             for(int i = 0; i < 3; i++)
@@ -185,7 +187,7 @@ namespace minesweeper
                 PictureBox p = new PictureBox();
                 p.Size = dims.mineCount[i].Size;
                 p.Location = dims.mineCount[i].Location;
-                p.ImageLocation = "res/dig_0.png";
+                p.Image = Resources.dig_0;
                 mineCount.Add(p);
                 this.Controls.Add(p);
             }
@@ -195,14 +197,14 @@ namespace minesweeper
                 PictureBox p = new PictureBox();
                 p.Size = dims.time[i].Size;
                 p.Location = dims.time[i].Location;
-                p.ImageLocation = "res/dig_0.png";
+                p.Image = Resources.dig_0;
                 time.Add(p);
                 this.Controls.Add(p);
             }
 
             face.Size = dims.face.Size;
             face.Location = dims.face.Location;
-            face.ImageLocation = "res/face_play.png";
+            face.Image = Resources.face_play;
             face.Click += new EventHandler(newGame);
             this.Controls.Add(face);
 
@@ -215,7 +217,7 @@ namespace minesweeper
                 p1.Location = new Point(dims.border_tl.Size.Width + i * p1.Size.Width, dims.border_tl.Location.Y);
                 p2.Location = new Point(p1.Location.X, dims.border_ml.Location.Y);
                 p3.Location = new Point(p1.Location.X, dims.border_bl.Location.Y);
-                p1.ImageLocation = p2.ImageLocation = p3.ImageLocation = "res/border_h.png";
+                p1.Image = p2.Image = p3.Image = Resources.border_h;
                 borderRowt.Add(p1);
                 borderRowm.Add(p2);
                 borderRowb.Add(p3);
@@ -231,7 +233,7 @@ namespace minesweeper
                 p1.Size = p2.Size = new Size(10, 16);
                 p1.Location = new Point(dims.border_ml.Location.X, dims.border_ml.Location.Y + dims.border_ml.Size.Height + i * p1.Size.Height);
                 p2.Location = new Point(dims.border_mr.Location.X, dims.border_ml.Location.Y + dims.border_ml.Size.Height + i * p1.Size.Height);
-                p1.ImageLocation = p2.ImageLocation = "res/border_v.png";
+                p1.Image = p2.Image = Resources.border_v;
                 borderColl.Add(p1);
                 borderColr.Add(p2);
                 this.Controls.Add(p1);
@@ -245,7 +247,7 @@ namespace minesweeper
                     PictureBox p = new PictureBox();
                     p.Size = new Size(16, 16);
                     p.Location = new Point(border_ml.Location.X + border_ml.Size.Width + i * p.Size.Width, border_ml.Location.Y + border_ml.Size.Height + j * p.Size.Height);
-                    p.ImageLocation = "res/unsel.png";
+                    p.Image = Resources.unsel;
                     p.MouseUp += new MouseEventHandler(onSpotRelease);
                     p.MouseDown += new MouseEventHandler(onSpotPress);
                     p.MouseEnter += new EventHandler(onSpotEnter);

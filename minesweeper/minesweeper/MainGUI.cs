@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using minesweeper.Properties;
 
 namespace minesweeper
 {
@@ -19,12 +20,15 @@ namespace minesweeper
         private int mouseX;
         private int mouseY;
         private MouseButtons mouseB;
+        private List<Image> sels;
+        private List<Image> digs;
 
         public MainGUI(GameData data_, SpotUpdater setFlag_, SpotUpdater searchMine_)
         {
             data = data_;
             setFlag = setFlag_;
             searchMine = searchMine_;
+            initImageLists();
             mouseDown = false;
             InitializeComponent(true);
             setDigital(mineCount, data.mineCount);
@@ -38,22 +42,22 @@ namespace minesweeper
             switch(data.status[x, y])
             {
                 case MineStatus.UNCLICKED:
-                    spots[idx].ImageLocation = "res/unsel.png";
+                    spots[idx].Image = Resources.unsel;
                     break;
                 case MineStatus.FLAGGED:
-                    spots[idx].ImageLocation = "res/flag.png";
+                    spots[idx].Image = Resources.flag;
                     break;
                 case MineStatus.QUESTION:
-                    spots[idx].ImageLocation = "res/question.png";
+                    spots[idx].Image = Resources.question;
                     break;
                 case MineStatus.CLICKED:
                     if(data.mines[x, y] == -1)
                     {
-                        spots[idx].ImageLocation = "res/mine_sel.png";
+                        spots[idx].Image = Resources.mine_sel;
                     }
                     else
                     {
-                        spots[idx].ImageLocation = "res/sel_" + data.mines[x, y] + ".png";
+                        spots[idx].Image = sels[data.mines[x, y]];
                     }
                     break;
             }
@@ -66,13 +70,13 @@ namespace minesweeper
             switch(data.gameStatus)
             {
                 case GameStatus.LOST:
-                    face.ImageLocation = "res/face_lost.png";
+                    face.Image = Resources.face_lost;
                     break;
                 case GameStatus.WON:
-                    face.ImageLocation = "res/face_won.png";
+                    face.Image = Resources.face_won;
                     break;
                 case GameStatus.PLAY:
-                    face.ImageLocation = "res/face_play.png";
+                    face.Image = Resources.face_play;
                     break;
             }
 
@@ -93,7 +97,7 @@ namespace minesweeper
                     || data.status[mouseX, mouseY] == MineStatus.QUESTION)
                     && mouseB == MouseButtons.Left)
                 {
-                    p.ImageLocation = "res/sel_0.png";
+                    p.Image = Resources.sel_0;
                 }
             }
         }
@@ -153,10 +157,10 @@ namespace minesweeper
 
             if (data.gameStatus == GameStatus.PLAY && mouseB == MouseButtons.Left)
             {
-                face.ImageLocation = "res/face_click.png";
+                face.Image = Resources.face_click;
                 if(data.status[mouseX, mouseY] == MineStatus.UNCLICKED || data.status[mouseX, mouseY] == MineStatus.QUESTION)
                 {
-                    p.ImageLocation = "res/sel_0.png";
+                    p.Image = Resources.sel_0;
                 }
             }
         }
@@ -175,13 +179,13 @@ namespace minesweeper
         {
             int hun, ten, one;
 
-            hun = val / 100;
+            hun = (val % 1000) / 100;
             ten = (val % 100) / 10;
             one = val % 10;
 
-            p[0].ImageLocation = "res/dig_" + hun + ".png";
-            p[1].ImageLocation = "res/dig_" + ten + ".png";
-            p[2].ImageLocation = "res/dig_" + one + ".png";
+            p[0].Image = digs[hun];
+            p[1].Image = digs[ten];
+            p[2].Image = digs[one];
         }
 
         /* Show all mines on the board */
@@ -193,13 +197,13 @@ namespace minesweeper
             {
                 for (int i = 0; i < data.width; i++)
                 {
-                    if(data.mines[i, j] == -1 && data.status[i, j] != MineStatus.CLICKED)
+                    if(data.mines[i, j] == -1 && data.status[i, j] != MineStatus.CLICKED && data.status[i, j] != MineStatus.FLAGGED)
                     {
-                        spots[idx].ImageLocation = "res/mine.png";
+                        spots[idx].Image = Resources.mine;
                     }
-                    else if (data.status[i, j] == MineStatus.FLAGGED)
+                    else if (data.status[i, j] == MineStatus.FLAGGED && data.mines[i, j] != -1)
                     {
-                        spots[idx].ImageLocation = "res/mine_not.png";
+                        spots[idx].Image = Resources.mine_not;
                     }
                     idx++;
                 }
@@ -217,7 +221,7 @@ namespace minesweeper
                 {
                     if (data.mines[i, j] == -1)
                     {
-                        spots[idx].ImageLocation = "res/flag.png";
+                        spots[idx].Image = Resources.flag;
                     }
                     idx++;
                 }
@@ -259,7 +263,7 @@ namespace minesweeper
             else
             {
                 for(int i = 0; i < width*height; i++)
-                    spots[i].ImageLocation = "res/unsel.png";
+                    spots[i].Image = Resources.unsel;
             }
             updateHeader();
         }
@@ -278,6 +282,33 @@ namespace minesweeper
         public void timerRunning(bool enabled)
         {
             timer.Enabled = enabled;
+        }
+
+        private void initImageLists()
+        {
+            sels = new List<Image>();
+            digs = new List<Image>();
+
+            sels.Add(Resources.sel_0);
+            sels.Add(Resources.sel_1);
+            sels.Add(Resources.sel_2);
+            sels.Add(Resources.sel_3);
+            sels.Add(Resources.sel_4);
+            sels.Add(Resources.sel_5);
+            sels.Add(Resources.sel_6);
+            sels.Add(Resources.sel_7);
+            sels.Add(Resources.sel_8);
+
+            digs.Add(Resources.dig_0);
+            digs.Add(Resources.dig_1);
+            digs.Add(Resources.dig_2);
+            digs.Add(Resources.dig_3);
+            digs.Add(Resources.dig_4);
+            digs.Add(Resources.dig_5);
+            digs.Add(Resources.dig_6);
+            digs.Add(Resources.dig_7);
+            digs.Add(Resources.dig_8);
+            digs.Add(Resources.dig_9);
         }
 
     }

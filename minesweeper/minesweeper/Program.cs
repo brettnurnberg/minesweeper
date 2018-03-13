@@ -6,9 +6,10 @@ using System.Windows.Forms;
 
 /* Master To Do list:
  * Figure out how to speed up loading images
- *   Could try to preload all images as bitmaps.
- *   Could figure out how to use resource scripts
+ *   Images are preloaded as resources - somewhat sped loading.
+ *   Could look into treating entire image as one large bitmap.
  * Implement statistics
+ *   Simply add three "name" strings and three "time" strings in resources.
  * Implement custom level selection
  */
 

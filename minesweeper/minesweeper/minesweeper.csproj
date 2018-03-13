@@ -67,6 +67,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -80,6 +81,120 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_bl.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_br.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_h.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_ml.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_mr.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_tl.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_tr.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_v.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border_vt.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_0.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_4.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_5.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_6.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_7.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_8.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dig_9.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face_click.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face_lost.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face_play.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face_won.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flag.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mine.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mine_not.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mine_sel.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\question.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_0.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_4.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_5.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_6.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_7.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sel_8.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unsel.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
