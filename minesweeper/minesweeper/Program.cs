@@ -9,8 +9,6 @@ using System.Windows.Forms;
  * Implement statistics
  *   Simply add three "name" strings and three "time" strings in resources.
  * Implement custom level selection
- * Pictures still load a teeny bit slowly - maybe its due to resizing the window?
- * We could split function of drawGame() to when it is resized and when it is not
  */
 
 namespace minesweeper
@@ -28,7 +26,10 @@ namespace minesweeper
             Application.SetCompatibleTextRenderingDefault(false);
 
             GameData data = new GameData();
+            HighScoreData hsData = new HighScoreData();
+
             GameController c = new GameController(data);
+            HighScoreController hsc = new HighScoreController(hsData);
 
             MainGUI gui = new MainGUI(data, c.setFlag, c.searchMine);
 

@@ -51,6 +51,7 @@ namespace minesweeper
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Capture = false;
+            this.Icon = Resources.mine1;
             this.MouseLeave += new EventHandler(leftForm);
 
             /* Create timer */
@@ -129,7 +130,8 @@ namespace minesweeper
             }
 
             face.Image = Resources.face_play;
-            face.Click += new EventHandler(newGame);
+            face.MouseUp += new MouseEventHandler(newGame);
+            face.MouseDown += new MouseEventHandler(onFacePress);
             this.Controls.Add(face);
 
             /* Draw game */
@@ -173,13 +175,7 @@ namespace minesweeper
             }
 
             /* Draw spots */
-            for(int i = 0; i < data.width; i++)
-            {
-                for (int j = 0; j < data.height; j++)
-                {
-                    drawSpot(i, j, Resources.unsel);
-                }
-            }
+            resetSpots();
 
             /* After images are created, set all locations */
             this.ClientSize = dims.window.Size;
@@ -205,6 +201,33 @@ namespace minesweeper
 
             face.Size = dims.face.Size;
             face.Location = dims.face.Location;
+        }
+
+        private void resetSpots()
+        {
+            if(data.width == 9 && data.height == 9)
+            {
+                spotsImg = Resources._9x9;
+            }
+            else if(data.width == 16 && data.height == 16)
+            {
+                spotsImg = Resources._16x16;
+            }
+            else if (data.width == 31 && data.height == 16)
+            {
+                spotsImg = Resources._31x16;
+            }
+            else
+            {
+                for (int i = 0; i < data.width; i++)
+                {
+                    for (int j = 0; j < data.height; j++)
+                    {
+                        drawSpot(i, j, Resources.unsel);
+                    }
+                }
+            }
+            spots.Image = spotsImg;
         }
 
     }

@@ -63,6 +63,36 @@ namespace minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _16x16 {
+            get {
+                object obj = ResourceManager.GetObject("_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _31x16 {
+            get {
+                object obj = ResourceManager.GetObject("_31x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _9x9 {
+            get {
+                object obj = ResourceManager.GetObject("_9x9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap border_bl {
             get {
                 object obj = ResourceManager.GetObject("border_bl", resourceCulture);
@@ -263,6 +293,16 @@ namespace minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap face_down {
+            get {
+                object obj = ResourceManager.GetObject("face_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap face_lost {
             get {
                 object obj = ResourceManager.GetObject("face_lost", resourceCulture);
@@ -327,6 +367,16 @@ namespace minesweeper.Properties {
             get {
                 object obj = ResourceManager.GetObject("mine_sel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon mine1 {
+            get {
+                object obj = ResourceManager.GetObject("mine1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

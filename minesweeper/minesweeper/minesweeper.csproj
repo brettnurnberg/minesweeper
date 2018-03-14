@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mine.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +52,9 @@
     <Compile Include="GameController.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameStatus.cs" />
+    <Compile Include="HighScoreController.cs" />
+    <Compile Include="HighScoreData.cs" />
+    <Compile Include="HighScoreEntry.cs" />
     <Compile Include="MainGUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +201,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\unsel.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9x9.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\16x16.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\31x16.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mine.ico" />
+    <None Include="Resources\face_down.bmp" />
+    <None Include="Resources\mine.ico" />
+    <None Include="Resources\mine.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

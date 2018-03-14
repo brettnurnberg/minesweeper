@@ -236,6 +236,11 @@ namespace minesweeper
             newGameSize(data.width, data.height, data.mineCount);
         }
 
+        private void onFacePress(Object sender, EventArgs e)
+        {
+            face.Image = Resources.face_down;
+        }
+
         private void newBeginnerGame(Object sender, EventArgs e)
         {
             newGameSize(9, 9, 10);
@@ -260,7 +265,15 @@ namespace minesweeper
 
             data.newGame(width, height, mines);
 
-            drawGame();
+            if(oldw == data.width && oldh == data.height)
+            {
+                resetSpots();
+            }
+            else
+            {
+                drawGame();
+            }
+
             updateHeader();
         }
 
