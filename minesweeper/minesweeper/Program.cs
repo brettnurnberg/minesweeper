@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/* Master To Do list:
- * Figure out how to speed up loading images
- *   Images are preloaded as resources - somewhat sped loading.
- *   Could look into treating entire image as one large bitmap.
+/* 
+ * Master To Do list:
  * Implement statistics
  *   Simply add three "name" strings and three "time" strings in resources.
  * Implement custom level selection
+ * Pictures still load a teeny bit slowly - maybe its due to resizing the window?
+ * We could split function of drawGame() to when it is resized and when it is not
  */
 
 namespace minesweeper

@@ -20,8 +20,10 @@ namespace minesweeper
         private int mouseX;
         private int mouseY;
         private MouseButtons mouseB;
-        private List<Image> sels;
-        private List<Image> digs;
+        private List<Bitmap> sels;
+        private List<Bitmap> digs;
+        private Bitmap borderImg;
+        private Bitmap spotsImg;
 
         public MainGUI(GameData data_, SpotUpdater setFlag_, SpotUpdater searchMine_)
         {
@@ -30,7 +32,7 @@ namespace minesweeper
             searchMine = searchMine_;
             initImageLists();
             mouseDown = false;
-            InitializeComponent(true);
+            InitializeComponent();
             setDigital(mineCount, data.mineCount);
         }
 
@@ -38,29 +40,31 @@ namespace minesweeper
         public void updateSpot(int x, int y)
         {
             /* Set given spot to correct image */
-            int idx = data.width * y + x;
+            Bitmap image = null;
+
             switch(data.status[x, y])
             {
                 case MineStatus.UNCLICKED:
-                    spots[idx].Image = Resources.unsel;
+                    image = Resources.unsel;
                     break;
                 case MineStatus.FLAGGED:
-                    spots[idx].Image = Resources.flag;
+                    image = Resources.flag;
                     break;
                 case MineStatus.QUESTION:
-                    spots[idx].Image = Resources.question;
+                    image = Resources.question;
                     break;
                 case MineStatus.CLICKED:
                     if(data.mines[x, y] == -1)
                     {
-                        spots[idx].Image = Resources.mine_sel;
+                        image = Resources.mine_sel;
                     }
                     else
                     {
-                        spots[idx].Image = sels[data.mines[x, y]];
+                        image = sels[data.mines[x, y]];
                     }
                     break;
             }
+            drawSpot(x, y, image);
         }
 
         /* Update minesweeper header */
@@ -86,29 +90,33 @@ namespace minesweeper
         }
 
         /* Used to hold down button on a drag */
-        private void onSpotEnter(Object sender, EventArgs e)
+        private void onMouseMove(Object sender, EventArgs e)
         {
-            if(mouseDown)
+            if(mouseDown && data.gameStatus == GameStatus.PLAY)
             {
-                PictureBox p = (PictureBox)sender;
+                int prevX = mouseX;
+                int prevY = mouseY;
 
-                setMouseCoords(p);
-                if ((data.status[mouseX, mouseY] == MineStatus.UNCLICKED
-                    || data.status[mouseX, mouseY] == MineStatus.QUESTION)
-                    && mouseB == MouseButtons.Left)
+                setMouseCoords((MouseEventArgs)e);
+
+                if(prevX != mouseX || prevY != mouseY)
                 {
-                    p.Image = Resources.sel_0;
+                    if (mouseX >= 0 && mouseX < data.width
+                      && mouseY >= 0 && mouseY < data.height)
+                    {
+                        if ((data.status[mouseX, mouseY] == MineStatus.UNCLICKED
+                          || data.status[mouseX, mouseY] == MineStatus.QUESTION)
+                          && mouseB == MouseButtons.Left)
+                        {
+                            drawSpot(mouseX, mouseY, Resources.sel_0);
+                        }
+                    }
+                    if (prevX >= 0 && prevX < data.width
+                     && prevY >= 0 && prevY < data.height)
+                    {
+                        updateSpot(prevX, prevY);
+                    }
                 }
-            }
-        }
-
-        /* Used to hold down button on a drag */
-        private void onSpotLeave(Object sender, EventArgs e)
-        {
-            if(mouseDown)
-            {
-                updateSpot(mouseX, mouseY);
-                this.Capture = false;
             }
         }
 
@@ -119,14 +127,12 @@ namespace minesweeper
             updateHeader();
         }
 
-        /* Runs when the mouse is released over a square */
+        /* Runs when the mouse is released over a square (change to mouse release on bitmap) */
         private void onSpotRelease(Object sender, EventArgs e)
         {
-            /* Fix so control doesn't capture the mouse */
-            PictureBox p = (PictureBox)sender;
-            p.Capture = true;
 
-            if (data.gameStatus == GameStatus.PLAY && mouseDown == true)
+            if ((mouseX >= 0 && mouseX < data.width && mouseY >= 0 && mouseY < data.height)
+             && (data.gameStatus == GameStatus.PLAY && mouseDown == true))
             {
                 MouseEventArgs me = (MouseEventArgs)e;
 
@@ -139,39 +145,38 @@ namespace minesweeper
                 {
                     setFlag(mouseX, mouseY);
                 }
-                updateHeader();
             }
+
+            updateHeader();
             mouseDown = false;
         }
 
-        /* Runs when the mouse is pressed over a square */
+        /* Runs when the mouse is pressed over a square (change to press on bitmap) */
         private void onSpotPress(Object sender, EventArgs e)
         {
             mouseDown = true;
 
-            PictureBox p = (PictureBox)sender;
-            setMouseCoords(p);
-            p.Capture = false;
             MouseEventArgs me = (MouseEventArgs)e;
             mouseB = me.Button;
+
+            setMouseCoords(me);
 
             if (data.gameStatus == GameStatus.PLAY && mouseB == MouseButtons.Left)
             {
                 face.Image = Resources.face_click;
                 if(data.status[mouseX, mouseY] == MineStatus.UNCLICKED || data.status[mouseX, mouseY] == MineStatus.QUESTION)
                 {
-                    p.Image = Resources.sel_0;
+                    drawSpot(mouseX, mouseY, Resources.sel_0);
                 }
             }
         }
 
-        private void setMouseCoords(PictureBox p)
+        /* Sets coordinates of mouse */
+        private void setMouseCoords(MouseEventArgs me)
         {
-            int idx = spots.IndexOf(p);
-
             /* get coordinates of clicked box */
-            mouseX = idx % data.width;
-            mouseY = idx / data.width;
+            mouseX = me.X / 16;
+            mouseY = me.Y / 16;
         }
 
         /* Set the digital number to given value */
@@ -199,11 +204,11 @@ namespace minesweeper
                 {
                     if(data.mines[i, j] == -1 && data.status[i, j] != MineStatus.CLICKED && data.status[i, j] != MineStatus.FLAGGED)
                     {
-                        spots[idx].Image = Resources.mine;
+                        drawSpot(i, j, Resources.mine);
                     }
                     else if (data.status[i, j] == MineStatus.FLAGGED && data.mines[i, j] != -1)
                     {
-                        spots[idx].Image = Resources.mine_not;
+                        drawSpot(i, j, Resources.mine_not);
                     }
                     idx++;
                 }
@@ -213,17 +218,14 @@ namespace minesweeper
         /* Show all flags on the board */
         public void showFlags()
         {
-            int idx = 0;
-            
             for (int j = 0; j < data.height; j++)
             {
                 for (int i = 0; i < data.width; i++)
                 {
                     if (data.mines[i, j] == -1)
                     {
-                        spots[idx].Image = Resources.flag;
+                        drawSpot(i, j, Resources.flag);
                     }
-                    idx++;
                 }
             }
         }
@@ -249,6 +251,7 @@ namespace minesweeper
             newGameSize(31, 16, 99);
         }
 
+        /* Initialize new game with given size */
         private void newGameSize(int width, int height, int mines)
         {
             int oldw = data.width;
@@ -256,21 +259,33 @@ namespace minesweeper
             timer.Enabled = false;
 
             data.newGame(width, height, mines);
-            if(oldw != width || oldh != height)
-            {
-                InitializeComponent(false);
-            }
-            else
-            {
-                for(int i = 0; i < width*height; i++)
-                    spots[i].Image = Resources.unsel;
-            }
+
+            drawGame();
             updateHeader();
         }
 
         private void exitGame(Object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        /* Draw the given image on the spots image */
+        private void drawSpot(int x, int y, Bitmap img)
+        {
+            drawOnBitmap(x * 16, y * 16, img, spotsImg);
+            spots.Image = spotsImg;
+        }
+
+        /* Draw an image on bitmap at given location */
+        private void drawOnBitmap(int xpixel, int ypixel, Bitmap overImage, Bitmap underImage)
+        {
+            for (int i = 0; i < overImage.Width; i++)
+            {
+                for (int j = 0; j < overImage.Height; j++)
+                {
+                    underImage.SetPixel(i + xpixel, j + ypixel, overImage.GetPixel(i, j));
+                }
+            }
         }
 
         private void onTick(Object sender, EventArgs e)
@@ -286,8 +301,8 @@ namespace minesweeper
 
         private void initImageLists()
         {
-            sels = new List<Image>();
-            digs = new List<Image>();
+            sels = new List<Bitmap>();
+            digs = new List<Bitmap>();
 
             sels.Add(Resources.sel_0);
             sels.Add(Resources.sel_1);
