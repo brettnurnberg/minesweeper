@@ -243,16 +243,19 @@ namespace minesweeper
 
         private void newBeginnerGame(Object sender, EventArgs e)
         {
+            data.level = GameDifficulty.BEGINNER;
             newGameSize(9, 9, 10);
         }
 
         private void newIntermediateGame(Object sender, EventArgs e)
         {
+            data.level = GameDifficulty.INTERMEDIATE;
             newGameSize(16, 16, 40);
         }
 
         private void newExpertGame(Object sender, EventArgs e)
         {
+            data.level = GameDifficulty.EXPERT;
             newGameSize(31, 16, 99);
         }
 

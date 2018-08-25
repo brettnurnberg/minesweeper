@@ -10,5 +10,11 @@ namespace minesweeper
     {
         public string name { get; set; }
         public double time { get; set; }
+
+        public HighScoreEntry(string name_, double time_)
+        {
+            name = name_;
+            time = time_;
+        }
     }
 }

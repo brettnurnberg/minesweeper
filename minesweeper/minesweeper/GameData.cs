@@ -16,6 +16,7 @@ namespace minesweeper
         public int[,] mines { get; set; }
         public MineStatus[,] status { get; set; }
         public GameStatus gameStatus { get; set; }
+        public GameDifficulty level { get; set; }
         public DateTime startTime { get; set; }
         public int currTime { get; set; }
         public double gameTime { get; set; }
@@ -23,6 +24,7 @@ namespace minesweeper
         public GameData()
         {
             newGame(9, 9, 10);
+            level = GameDifficulty.BEGINNER;
         }
 
         /* Generate minesweeper gameboard */

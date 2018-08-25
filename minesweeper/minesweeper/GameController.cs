@@ -15,10 +15,14 @@ namespace minesweeper
         private Updater showFlags;
         private TimeUpdater timerRunning;
         private SpotUpdater updateSpot;
+        private HSChecker isHighscore;
+        private HSSetter updateHighscore;
         private GameData data;
 
-        public GameController(GameData data_)
+        public GameController(GameData data_, HSChecker hschk, HSSetter hsset)
         {
+            isHighscore = hschk;
+            updateHighscore = hsset;
             data = data_;
         }
         
@@ -93,7 +97,13 @@ namespace minesweeper
                     data.flagCount = data.mineCount;
                     data.gameTime = (DateTime.Now - data.startTime).TotalSeconds;
                     timerRunning(false);
-                    //game WON code - high scores
+                    if(isHighscore(data.gameTime, data.level))
+                    {
+                        string name = "Anonymous";
+                        /* prompt user for name */
+                        //name = getPlayerName();
+                        updateHighscore(name, data.gameTime, data.level);
+                    }
                 }
                 updateSpot(x, y);
             }

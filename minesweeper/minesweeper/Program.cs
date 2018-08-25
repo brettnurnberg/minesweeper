@@ -7,7 +7,7 @@ using System.Windows.Forms;
 /* 
  * Master To Do list:
  * Implement statistics
- *   Simply add three "name" strings and three "time" strings in resources.
+ *   Create file implementation.
  * Implement custom level selection
  */
 
@@ -16,6 +16,8 @@ namespace minesweeper
     public delegate void Updater();
     public delegate void TimeUpdater(bool enabled);
     public delegate void SpotUpdater(int x, int y);
+    public delegate bool HSChecker(double t, GameDifficulty d);
+    public delegate void HSSetter(string n, double t, GameDifficulty d);
 
     static class Program
     {
@@ -27,9 +29,9 @@ namespace minesweeper
 
             GameData data = new GameData();
             HighScoreData hsData = new HighScoreData();
-
-            GameController c = new GameController(data);
+            
             HighScoreController hsc = new HighScoreController(hsData);
+            GameController c = new GameController(data, hsc.isHighscore, hsc.updateHighscore);
 
             MainGUI gui = new MainGUI(data, c.setFlag, c.searchMine);
 

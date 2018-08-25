@@ -51,6 +51,7 @@
     <Compile Include="ControlDimension.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="GameData.cs" />
+    <Compile Include="GameDifficulty.cs" />
     <Compile Include="GameStatus.cs" />
     <Compile Include="HighScoreController.cs" />
     <Compile Include="HighScoreData.cs" />

@@ -95,6 +95,7 @@ namespace minesweeper
             gameMenu.DropDownItems.Add(exitItem);
 
             menu = new MenuStrip();
+            menu.BackColor = Color.White;
             menu.Items.Add(gameMenu);
             this.Controls.Add(menu);
             this.MainMenuStrip = menu;
